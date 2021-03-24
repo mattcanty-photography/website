@@ -1,0 +1,61 @@
+{% code
+type Album struct {
+    ID           string
+    CoverPhotoID string
+}
+
+type PortfolioPage struct {
+    PortfolioID string
+    Albums      []Album
+}
+%}
+
+{% func (p *PortfolioPage) Breadcrumbs() %}
+<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="/">
+                Home
+            </a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+            {%s p.PortfolioID %}
+        </li>
+    </ol>
+</nav>
+{% endfunc %}
+
+{% func (p *PortfolioPage) Body() %}
+<section class="py-5 text-center container">
+    <div class="row py-lg-5">
+        <div class="col-lg-6 col-md-8 mx-auto">
+            <h1 class="fw-light">Brockwell Park Community Greenhouses</h1>
+            <p class="lead text-muted">
+                Brockwell Park Community Greenhouses (BPCG) is a community garden in the centre of Lambeth’s Brockwell
+                Park.
+                I volunteer there every Friday and highly recommend popping in if you are passing by.
+            </p>
+        </div>
+    </div>
+</section>
+<div class="album py-5">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            {% for _, album := range p.Albums %}
+            <div class="col">
+                <div class="card shadow-sm">
+                    <img src="https://photo.mattcanty.com/portfolios/{%s p.PortfolioID %}/albums/{%s album.ID %}/thumbs/{%s album.CoverPhotoID %}"
+                        class="w-100" alt="Album cover photo">
+                    <div class="card-body">
+                        <h4>{%s album.ID %}</h4>
+                        <p class="card-text"></p>
+                        <a href="/portfolio/{%s p.PortfolioID %}/album/{%s album.ID %}"
+                            class="btn btn-md btn-outline-secondary stretched-link">View</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endfunc %}

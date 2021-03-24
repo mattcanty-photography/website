@@ -1,0 +1,31 @@
+{% code
+type NotFoundPage struct {
+}
+%}
+
+{% func (p *NotFoundPage) Breadcrumbs() %}
+<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="/">
+                Home
+            </a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+            Not Found!
+        </li>
+    </ol>
+</nav>
+{% endfunc %}
+
+{% func (p *NotFoundPage) Body() %}
+<section class="py-5 text-center container">
+    <div class="row py-lg-5">
+        <div class="col-lg-6 col-md-8 mx-auto">
+            <h1 class="fw-light">Page Not Found</h1>
+            <p class="lead text-muted">Either you are lost, or I have done something wrong. Have a nice day :-)</p>
+        </div>
+    </div>
+</section>
+
+{% endfunc %}

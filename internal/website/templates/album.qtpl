@@ -1,0 +1,44 @@
+{% code
+type Photo struct {
+    ID           string
+}
+
+type AlbumPage struct {
+    PortfolioID string
+    AlbumID     string
+    Photos      []Photo
+}
+%}
+
+{% func (p *AlbumPage) Breadcrumbs() %}
+<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="/">
+                Home
+            </a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="/portfolio/{%s p.PortfolioID %}">
+                {%s p.PortfolioID %}
+            </a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+            {%s p.AlbumID %}
+        </li>
+    </ol>
+</nav>
+{% endfunc %}
+
+{% func (p *AlbumPage) Body() %}
+<div class="row grid" data-masonry='{"percentPosition": true }'>
+    {% for _, photo := range p.Photos %}
+    <div class="col-sm-6 col-lg-4 mb-4">
+        <a href="/portfolio/{%s p.PortfolioID %}/album/{%s p.AlbumID %}/photo/{%s photo.ID %}">
+            <img class="img-fluid"
+                src="https://photo.mattcanty.com/portfolios/{%s p.PortfolioID %}/albums/{%s p.AlbumID %}/thumbs/{%s photo.ID %}" />
+        </a>
+    </div>
+    {% endfor %}
+</div>
+{% endfunc %}

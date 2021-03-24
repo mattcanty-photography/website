@@ -1,0 +1,41 @@
+{% code
+type PhotoPage struct {
+    PortfolioID string
+    AlbumID     string
+    PhotoID     string
+}
+%}
+
+{% func (p *PhotoPage) Breadcrumbs() %}
+<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="/">
+                Home
+            </a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="/portfolio/{%s p.PortfolioID %}">
+                {%s p.PortfolioID %}
+            </a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="/portfolio/{%s p.PortfolioID %}/album/{%s p.AlbumID %}">
+                {%s p.AlbumID %}
+            </a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+            {%s p.PhotoID %}
+        </li>
+    </ol>
+</nav>
+{% endfunc %}
+
+{% func (p *PhotoPage) Body() %}
+<div class="row">
+    <div class="col">
+        <img class="img-fluid mx-auto d-block"
+            src="https://photo.mattcanty.com/portfolios/{%s p.PortfolioID %}/albums/{%s p.AlbumID %}/fulls/{%s p.PhotoID %}" />
+    </div>
+</div>
+{% endfunc %}
