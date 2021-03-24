@@ -3,11 +3,13 @@ before:
     - go get -u github.com/valyala/quicktemplate/qtc
     - qtc
 builds:
-  - binary: handler
+  - id: aws-lambda-handler
+    binary: handler
     main: ./cmd/aws/lambda/handler
     env:
       - CGO_ENABLED=0
-  - binary: website
+  - id: website
+    binary: website
     main: ./cmd/http
     env:
       - CGO_ENABLED=0
