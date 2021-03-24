@@ -10,7 +10,7 @@ import (
 )
 
 func homePageHandler(w http.ResponseWriter, r *http.Request) {
-	w.Header().Add("Content-Type", "text/html")
+	w.Header().Add("Content-Type", "text/html; charset=utf-8")
 	templates.WritePageTemplate(w, &templates.HomePage{})
 }
 
@@ -36,6 +36,7 @@ func portfolioPageHandler(w http.ResponseWriter, r *http.Request) {
 		})
 	}
 
+	w.Header().Add("Content-Type", "text/html; charset=utf-8")
 	templates.WritePageTemplate(w, data)
 }
 
@@ -62,10 +63,12 @@ func albumPageHandler(w http.ResponseWriter, r *http.Request) {
 		})
 	}
 
+	w.Header().Add("Content-Type", "text/html; charset=utf-8")
 	templates.WritePageTemplate(w, data)
 }
 
 func photoPageHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Add("Content-Type", "text/html; charset=utf-8")
 	templates.WritePageTemplate(w, &templates.PhotoPage{
 		PortfolioID: chi.URLParam(r, "portfolioID"),
 		AlbumID:     chi.URLParam(r, "albumID"),
@@ -74,6 +77,7 @@ func photoPageHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func notFoundPageHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Add("Content-Type", "text/html; charset=utf-8")
 	templates.WritePageTemplate(w, &templates.ErrorPage{
 		Heading: "Not Found",
 		Message: "Either you are lost, or I have done something wrong. Have a nice day :-)",
@@ -81,6 +85,8 @@ func notFoundPageHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func errorHandler(w http.ResponseWriter, oplog zerolog.Logger, err error) {
+	w.Header().Add("Content-Type", "text/html; charset=utf-8")
+
 	oplog.Error().Msg(err.Error())
 	templates.WritePageTemplate(w, &templates.ErrorPage{
 		Heading: "Error",
