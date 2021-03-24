@@ -11,7 +11,7 @@ import (
 )
 
 func getPortfolio(portfolioID string) (portfolio, error) {
-	svc := s3.New(session.New(), &aws.Config{Region: aws.String(os.Getenv("REGION"))})
+	svc := s3.New(session.New(), &aws.Config{Region: aws.String(os.Getenv("AWS_REGION"))})
 
 	resp, err := svc.ListObjectsV2(&s3.ListObjectsV2Input{
 		Bucket:    aws.String(os.Getenv("PHOTO_BUCKET_NAME")),
@@ -42,7 +42,7 @@ func getPortfolio(portfolioID string) (portfolio, error) {
 }
 
 func getAlbum(portfolioID string, albumID string) (album, error) {
-	svc := s3.New(session.New(), &aws.Config{Region: aws.String(os.Getenv("REGION"))})
+	svc := s3.New(session.New(), &aws.Config{Region: aws.String(os.Getenv("AWS_REGION"))})
 	prefix := fmt.Sprintf("portfolios/%s/albums/%s/thumbs/", portfolioID, albumID)
 
 	resp, err := svc.ListObjectsV2(&s3.ListObjectsV2Input{
@@ -74,7 +74,7 @@ func getCoverPhotoID(portfolioID string, albumID string) (string, error) {
 	bucket := os.Getenv("PHOTO_BUCKET_NAME")
 	prefix := fmt.Sprintf("portfolios/%s/albums/%s/thumbs/", portfolioID, albumID)
 
-	svc := s3.New(session.New(), &aws.Config{Region: aws.String(os.Getenv("REGION"))})
+	svc := s3.New(session.New(), &aws.Config{Region: aws.String(os.Getenv("AWS_REGION"))})
 
 	resp, err := svc.ListObjectsV2(&s3.ListObjectsV2Input{
 		Bucket:     aws.String(bucket),
