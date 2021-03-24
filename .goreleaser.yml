@@ -2,10 +2,6 @@ before:
   hooks:
     - go get -u github.com/valyala/quicktemplate/qtc
     - qtc
-
-builds:
-- binary: blah
-  main: ./blah/main.go
 builds:
   - binary: handler
     main: ./cmd/aws/lambda/handler
