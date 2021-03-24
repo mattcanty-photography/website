@@ -6,6 +6,10 @@ builds:
   - id: aws-lambda-handler
     binary: handler
     main: ./cmd/aws/lambda/handler
+    goos:
+      - linux
+    goarch:
+      - amd64
     env:
       - CGO_ENABLED=0
   - id: website
@@ -14,12 +18,10 @@ builds:
     env:
       - CGO_ENABLED=0
 archives:
-  - replacements:
-      darwin: Darwin
-      linux: Linux
-      windows: Windows
-      386: i386
-      amd64: x86_64
+  - id: aws-lambda-handler
+    builds:
+      - aws-lambda-handler
+    format: zip
 checksum:
   name_template: "checksums.txt"
 snapshot:
