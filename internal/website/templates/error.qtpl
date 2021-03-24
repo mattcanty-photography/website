@@ -1,9 +1,11 @@
 {% code
-type NotFoundPage struct {
+type ErrorPage struct {
+    Heading string
+    Message string
 }
 %}
 
-{% func (p *NotFoundPage) Breadcrumbs() %}
+{% func (p *ErrorPage) Breadcrumbs() %}
 <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
@@ -12,18 +14,18 @@ type NotFoundPage struct {
             </a>
         </li>
         <li class="breadcrumb-item active" aria-current="page">
-            Not Found!
+            {%s p.Heading %}
         </li>
     </ol>
 </nav>
 {% endfunc %}
 
-{% func (p *NotFoundPage) Body() %}
+{% func (p *ErrorPage) Body() %}
 <section class="py-5 text-center container">
     <div class="row py-lg-5">
         <div class="col-lg-6 col-md-8 mx-auto">
-            <h1 class="fw-light">Page Not Found</h1>
-            <p class="lead text-muted">Either you are lost, or I have done something wrong. Have a nice day :-)</p>
+            <h1 class="fw-light">{%s p.Heading %}</h1>
+            <p class="lead text-muted">{%s p.Message %}</p>
         </div>
     </div>
 </section>

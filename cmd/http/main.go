@@ -8,7 +8,10 @@ import (
 )
 
 func main() {
-	log.SetFlags(log.LstdFlags | log.Lshortfile)
+	config := website.RoutingConfiguration{
+		RoutePatternPrefix: "",
+		JsonLogging:        false,
+	}
 
-	log.Fatal(http.ListenAndServe(":3000", website.SetupRouting()))
+	log.Fatal(http.ListenAndServe(":3000", website.SetupRouting(config)))
 }

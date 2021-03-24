@@ -2,7 +2,6 @@ package website
 
 import (
 	"fmt"
-	"log"
 	"os"
 	"strings"
 
@@ -11,19 +10,8 @@ import (
 	"github.com/aws/aws-sdk-go/service/s3"
 )
 
-type album struct {
-	ID          string
-	PortfolioID string
-	CoverID     string
-}
-
-type photo struct {
-	ID    string
-	Album album
-}
-
-func getAlbums(portfolioID string) []album {
-	svc := s3.New(session.New(), &aws.Config{Region: aws.String("eu-west-2")})
+func getPortfolio(portfolioID string) (portfolio, error) {
+	svc := s3.New(session.New(), &aws.Config{Region: aws.String(os.Getenv("REGION"))})
 
 	resp, err := svc.ListObjectsV2(&s3.ListObjectsV2Input{
 		Bucket:    aws.String(os.Getenv("PHOTO_BUCKET_NAME")),
@@ -31,14 +19,17 @@ func getAlbums(portfolioID string) []album {
 		Delimiter: aws.String("/"),
 	})
 	if err != nil {
-		log.Fatal(err)
+		return portfolio{}, err
 	}
 
 	var albums []album
 
 	for _, o := range resp.CommonPrefixes {
 		albumID := strings.Split(*o.Prefix, "/")[3]
-		coverID := getCoverPhotoID(portfolioID, albumID)
+		coverID, err := getCoverPhotoID(portfolioID, albumID)
+		if err != nil {
+			return portfolio{}, err
+		}
 
 		albums = append(albums, album{
 			ID:          albumID,
@@ -47,11 +38,11 @@ func getAlbums(portfolioID string) []album {
 		})
 	}
 
-	return albums
+	return portfolio{ID: portfolioID, Albums: albums}, nil
 }
 
-func getPhotos(portfolioID string, albumID string) []photo {
-	svc := s3.New(session.New(), &aws.Config{Region: aws.String("eu-west-2")})
+func getAlbum(portfolioID string, albumID string) (album, error) {
+	svc := s3.New(session.New(), &aws.Config{Region: aws.String(os.Getenv("REGION"))})
 	prefix := fmt.Sprintf("portfolios/%s/albums/%s/thumbs/", portfolioID, albumID)
 
 	resp, err := svc.ListObjectsV2(&s3.ListObjectsV2Input{
@@ -60,7 +51,7 @@ func getPhotos(portfolioID string, albumID string) []photo {
 		StartAfter: aws.String(prefix),
 	})
 	if err != nil {
-		log.Fatal(err)
+		return album{}, err
 	}
 
 	var photos []photo
@@ -76,14 +67,14 @@ func getPhotos(portfolioID string, albumID string) []photo {
 		})
 	}
 
-	return photos
+	return album{ID: albumID, Photos: photos}, nil
 }
 
-func getCoverPhotoID(portfolioID string, albumID string) string {
+func getCoverPhotoID(portfolioID string, albumID string) (string, error) {
 	bucket := os.Getenv("PHOTO_BUCKET_NAME")
 	prefix := fmt.Sprintf("portfolios/%s/albums/%s/thumbs/", portfolioID, albumID)
 
-	svc := s3.New(session.New(), &aws.Config{Region: aws.String("eu-west-2")})
+	svc := s3.New(session.New(), &aws.Config{Region: aws.String(os.Getenv("REGION"))})
 
 	resp, err := svc.ListObjectsV2(&s3.ListObjectsV2Input{
 		Bucket:     aws.String(bucket),
@@ -92,8 +83,8 @@ func getCoverPhotoID(portfolioID string, albumID string) string {
 		MaxKeys:    aws.Int64(1),
 	})
 	if err != nil {
-		log.Fatal(err)
+		return "", err
 	}
 
-	return strings.Split(*resp.Contents[0].Key, "/")[5]
+	return strings.Split(*resp.Contents[0].Key, "/")[5], nil
 }
