@@ -22,6 +22,7 @@ archives:
     builds:
       - aws-lambda-handler
     format: zip
+    name_template: "{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}"
 checksum:
   name_template: "checksums.txt"
 snapshot:
