@@ -9,7 +9,7 @@ import (
 
 func main() {
 	config := website.RoutingConfiguration{
-		RoutePatternPrefix: "",
+		RoutePatternPrefix: "/{apiStage}",
 		JsonLogging:        true,
 	}
 
