@@ -1,0 +1,34 @@
+before:
+  hooks:
+    - go get -u github.com/valyala/quicktemplate/qtc
+    - qtc
+
+builds:
+- binary: blah
+  main: ./blah/main.go
+builds:
+  - binary: handler
+    main: ./cmd/aws/lambda/handler
+    env:
+      - CGO_ENABLED=0
+  - binary: website
+    main: ./cmd/http
+    env:
+      - CGO_ENABLED=0
+archives:
+  - replacements:
+      darwin: Darwin
+      linux: Linux
+      windows: Windows
+      386: i386
+      amd64: x86_64
+checksum:
+  name_template: "checksums.txt"
+snapshot:
+  name_template: "{{ .Tag }}-next"
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"
