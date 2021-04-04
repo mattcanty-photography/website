@@ -14,6 +14,7 @@ type HomePage struct {
 {% endfunc %}
 
 {% func (p *HomePage) Body() %}
+
 <div class="row gx-5">
     <div class="col">
         <div class="row g-0 bg-light position-relative">
@@ -27,9 +28,10 @@ type HomePage struct {
                     On arrival I spend some time photographing any interesting changes.
                     Most photographs taken are uploaded here weekly.
                 </p>
-                <a href="portfolio/bpcg" class="btn btn-primary stretched-link">Open Portfolio</a>
+                <a href="portfolio/bpcg" class="btn btn-primary stretched-link">Open</a>
             </div>
         </div>
     </div>
 </div>
+
 {% endfunc %}

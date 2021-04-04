@@ -27,22 +27,11 @@ Page {
                 <div class="col">
                     <h1 class="display-4">Matt Canty Photography</h1>
                 </div>
-                {%= p.Breadcrumbs() %}
+                <span style="text-transform:uppercase">{%= p.Breadcrumbs() %}</span>
             </div>
-            <div class="row gx-5">
-                <div class="col">
-                {%= p.Body() %}
-                </div>
-            </div>
+            {%= p.Body() %}
         </div>
     </main>
-    <div class="container overflow-hidden">
-        <div class="row gy-5">
-            <div class="col-6">
-                <div class="p-3"></div>
-            </div>
-        </div>
-    </div>
 
     <!-- BOOTSTRAP 5 -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"
