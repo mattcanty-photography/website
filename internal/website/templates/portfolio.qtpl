@@ -44,7 +44,7 @@ type PortfolioPage struct {
             {% for _, album := range p.Albums %}
             <div class="col">
                 <div class="card shadow-sm">
-                    <img src="https://photo.mattcanty.com/portfolios/{%s p.PortfolioID %}/albums/{%s album.ID %}/thumbs/{%s album.CoverPhotoID %}"
+                    <img src="https://photo.mattcanty.com/photo/portfolios/{%s p.PortfolioID %}/albums/{%s album.ID %}/thumbs/{%s album.CoverPhotoID %}"
                         class="w-100" alt="Album cover photo">
                     <div class="card-body">
                         <h4>{%s album.ID %}</h4>

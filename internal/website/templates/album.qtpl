@@ -36,7 +36,7 @@ type AlbumPage struct {
     <div class="col-sm-6 col-lg-4 mb-4">
         <a href="/portfolio/{%s p.PortfolioID %}/album/{%s p.AlbumID %}/photo/{%s photo.ID %}">
             <img class="img-fluid"
-                src="https://photo.mattcanty.com/portfolios/{%s p.PortfolioID %}/albums/{%s p.AlbumID %}/thumbs/{%s photo.ID %}" />
+                src="https://photo.mattcanty.com/photo/portfolios/{%s p.PortfolioID %}/albums/{%s p.AlbumID %}/thumbs/{%s photo.ID %}" />
         </a>
     </div>
     {% endfor %}
